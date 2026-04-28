@@ -6,6 +6,8 @@ import torch.nn as nn
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import pydeck as pdk
 from datetime import datetime
+import pytz
+import random
 
 # 引入工具
 from weather_tool import get_shanghai_weather
@@ -92,10 +94,14 @@ def generate_xuhui_grid(traffic_data_dict, hour, temp, humid, scaler_X, scaler_y
             local_speed = real_info['speed']
             congestion_factor = real_info['factor']
         else:
-            # 没查到（或模拟模式），给个基于时间的模拟值
+            # 没查到（或模拟模式），加入随机扰动防止全区数据一模一样
             is_peak = (8 <= hour <= 10) or (17 <= hour <= 19)
-            local_speed = 25 if is_peak else 45
-            congestion_factor = 2.0 if is_peak else 1.0
+            base_speed = 25 if is_peak else 45
+            base_factor = 2.0 if is_peak else 1.0
+            
+            # 每个点加上不同的随机波动，模拟真实不均匀路况
+            local_speed = max(5, base_speed + random.randint(-10, 10))
+            congestion_factor = max(0.5, base_factor + random.uniform(-0.4, 0.4))
 
         # 估算流量 (流量 = 基准 * 拥堵系数)
         local_volume = 2000 * congestion_factor
@@ -163,7 +169,9 @@ st.title("徐汇区 NOx 排放全区预测 (实时)")
 st.caption("基于Bi-LSTM 深度学习 | 高德交通大数据驱动 | GIS 空间分布")
 
 if model and scaler_X:
-    curr_hour = datetime.now().hour
+    shanghai_tz = pytz.timezone('Asia/Shanghai')
+    curr_time = datetime.now(shanghai_tz)
+    curr_hour = curr_time.hour
 
     # 1. 现场去爬每个点的数据！
     landmarks_coords = [
@@ -198,7 +206,7 @@ if model and scaler_X:
 
     # 4. 顶部 KPI 卡片
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("数据同步", datetime.now().strftime("%H:%M:%S"))
+    c1.metric("数据同步", curr_time.strftime("%H:%M:%S"))
     c2.metric("全区平均排放", f"{avg_nox:.2f} mg", delta="正常" if avg_nox < 80 else "偏高", delta_color="inverse")
 
     # 这里展示差异化！最堵和最畅通的地方
