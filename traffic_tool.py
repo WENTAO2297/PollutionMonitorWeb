@@ -30,7 +30,7 @@ def get_landmarks_traffic(landmarks_list):
         url = f"https://restapi.amap.com/v3/traffic/status/circle?location={location}&radius=1000&key={AMAP_KEY}&extensions=all"
         
         try:
-            resp = requests.get(url, timeout=3)
+            resp = requests.get(url, timeout=15)
             data = resp.json()
             
             # 🚨 核心拦截：检测高德是否提示配额耗尽或报错 (高德报错时 status 为 '0')
