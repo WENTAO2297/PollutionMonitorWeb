@@ -253,9 +253,7 @@ The Streamlit dashboard presents the 12 Xuhui landmarks, contextual traffic and 
 
 ## Results and Development Figures
 
-The current figures record early model iteration and a legacy comparison among several recurrent architectures. Because the evaluation procedure is not a controlled held-out benchmark, the figures cannot support a strict or reliable model ranking.
-
-![BiLSTM prediction visualization](assets/bilstm_prediction_performance.png)
+The retained historical figure records an early comparison among several recurrent architectures. Because the evaluation procedure is not a controlled held-out benchmark, it cannot support a strict or reliable model ranking.
 
 ![Historical model comparison](assets/model_comparison_legacy.png)
 
