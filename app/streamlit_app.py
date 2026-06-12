@@ -10,15 +10,18 @@ import pytz
 import random
 import torch.nn.functional as F
 from pathlib import Path
+import sys
 
 
-# 终端输入 streamlit run 文件名
-# 引入工具
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+
 from src.weather_service import get_shanghai_weather
 from src.traffic_service import get_amap_api_key, get_landmarks_traffic
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = PROJECT_ROOT / 'data' / 'processed' / 'shanghai_traffic_simulation.csv'
 MODEL_PATH = PROJECT_ROOT / 'models' / 'bilstm_attention.pth'
 

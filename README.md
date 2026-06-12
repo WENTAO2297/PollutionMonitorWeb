@@ -243,9 +243,15 @@ Run the development-stage model comparison:
 python scripts/evaluate_models.py
 ```
 
-This loads the main model and three historical baselines and writes a comparison figure to `assets/model_comparison.png`.
+This loads the main model and three historical baselines and writes a new evaluation output to `assets/model_comparison.png`. This generated file is separate from the retained historical figure `assets/model_comparison_legacy.png`.
 
-## Results
+## Demo and Screenshots
+
+The Streamlit dashboard presents the 12 Xuhui landmarks, contextual traffic and weather information, model-output summaries, and a PyDeck map. Depending on API availability and configuration, the screenshot may show real-time contextual inputs or fallback data; the displayed NOx values remain outputs of the simulated proxy task.
+
+![Streamlit dashboard screenshot](assets/dashboard.png)
+
+## Results and Development Figures
 
 The current figures record early model iteration and a legacy comparison among several recurrent architectures. Because the evaluation procedure is not a controlled held-out benchmark, the figures cannot support a strict or reliable model ranking.
 
@@ -253,7 +259,7 @@ The current figures record early model iteration and a legacy comparison among s
 
 ![Historical model comparison](assets/model_comparison_legacy.png)
 
-`assets/model_comparison_legacy.png` is the historical comparison figure retained from an earlier experiment. Running `python scripts/evaluate_models.py` generates a new figure at `assets/model_comparison.png`.
+`assets/model_comparison_legacy.png` is the historical model comparison retained from an earlier experiment. Running `python scripts/evaluate_models.py` performs the current comparison procedure and generates a separate re-evaluation output at `assets/model_comparison.png`; it does not replace or describe the provenance of the legacy figure.
 
 The current evaluation has important weaknesses:
 
