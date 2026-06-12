@@ -1,0 +1,55 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python caches and test/tool caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+
+# Local Streamlit configuration
+.streamlit/
+!.streamlit/config.toml
+
+# Undocumented raw and archived datasets
+data/raw/
+legacy/data/
+*.xls
+*.xlsx
+*.zip
+*.tar
+*.tar.gz
+
+# Temporary files and local outputs
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+*~
+tmp/
+temp/
+cache/
+.cache/
+*.coverage
+coverage.xml
+.nox/
+.tox/
